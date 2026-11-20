@@ -26,3 +26,9 @@ def test_pagamento_com_nove_dias_de_antecedencia_e_valor_cheio():
     valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO, date(2026, 11, 1))
 
     assert valor == Decimal("1000.00")
+
+
+def test_pagamento_um_dia_depois_do_vencimento_tem_encargos():
+    valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO, date(2026, 11, 11))
+
+    assert valor == Decimal("1020.33")

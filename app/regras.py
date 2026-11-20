@@ -87,4 +87,4 @@ def calcular_valor_pagamento(valor: Decimal, vencimento: date, pagamento: date) 
     antecedencia = (vencimento - pagamento).days
     if antecedencia >= DIAS_PARA_DESCONTO:
         return valor - valor * DESCONTO_ANTECIPACAO
-    return valor
+    return valor + calcular_encargos(valor, vencimento, pagamento)
