@@ -51,3 +51,9 @@ def test_vencimento_no_sabado_pago_na_terca_tem_um_dia_de_encargos():
     valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 17))
 
     assert valor == Decimal("1020.33")
+
+
+def test_antecedencia_conta_sobre_o_vencimento_original_dez_dias_antes_do_sabado():
+    valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 4))
+
+    assert valor == Decimal("950.00")
