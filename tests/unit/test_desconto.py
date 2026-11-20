@@ -8,6 +8,7 @@ from decimal import Decimal
 from app.regras import calcular_valor_pagamento
 
 VENCIMENTO = date(2026, 11, 10)   # terça-feira
+VENCIMENTO_SABADO = date(2026, 11, 14)   # prorrogado para segunda, 16/11 (regra 5)
 
 
 def test_pagamento_no_vencimento_e_valor_cheio():
@@ -38,3 +39,9 @@ def test_pagamento_trinta_dias_depois_do_vencimento_tem_encargos():
     valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO, date(2026, 12, 10))
 
     assert valor == Decimal("1029.90")
+
+
+def test_vencimento_no_sabado_pago_na_segunda_e_valor_cheio():
+    valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 16))
+
+    assert valor == Decimal("1000.00")
