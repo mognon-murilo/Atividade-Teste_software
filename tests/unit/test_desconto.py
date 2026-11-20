@@ -57,3 +57,10 @@ def test_antecedencia_conta_sobre_o_vencimento_original_dez_dias_antes_do_sabado
     valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 4))
 
     assert valor == Decimal("950.00")
+
+
+def test_antecedencia_conta_sobre_o_vencimento_original_nove_dias_antes_do_sabado():
+    # são 11 dias antes da segunda prorrogada, mas só 9 antes do vencimento original
+    valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 5))
+
+    assert valor == Decimal("1000.00")
