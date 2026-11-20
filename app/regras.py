@@ -83,7 +83,13 @@ def novo_status(valor_do_titulo: Decimal, saldo_restante: Decimal) -> str:
 
 
 def calcular_valor_pagamento(valor: Decimal, vencimento: date, pagamento: date) -> Decimal:
-    """Regra 9: desconto por antecipação, valor cheio ou valor com encargos."""
+    """Regra 9: desconto por antecipação, valor cheio ou valor com encargos.
+
+    A antecedência é contada sobre o vencimento original. Com 10 dias ou mais, o valor
+    pago tem 5% de desconto (arredondado, meio centavo para cima). Nos demais casos valem
+    os encargos da regra 4, que já aplicam a prorrogação de fim de semana (regra 5) e são
+    zero até o vencimento, inclusive: por isso o valor cheio não precisa de desvio próprio.
+    """
     antecedencia = (vencimento - pagamento).days
     if antecedencia >= DIAS_PARA_DESCONTO:
         desconto = (valor * DESCONTO_ANTECIPACAO).quantize(CENTAVO, rounding=ROUND_HALF_UP)
