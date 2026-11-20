@@ -71,3 +71,10 @@ def test_desconto_com_meio_centavo_e_arredondado_para_cima():
     valor = calcular_valor_pagamento(Decimal("100.10"), VENCIMENTO, date(2026, 10, 31))
 
     assert valor == Decimal("95.09")
+
+
+def test_vencimento_no_sabado_pago_no_domingo_e_valor_cheio():
+    # depois do vencimento original, mas antes da segunda prorrogada: ainda sem encargos
+    valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 15))
+
+    assert valor == Decimal("1000.00")
