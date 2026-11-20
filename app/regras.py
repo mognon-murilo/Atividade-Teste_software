@@ -86,5 +86,6 @@ def calcular_valor_pagamento(valor: Decimal, vencimento: date, pagamento: date) 
     """Regra 9: desconto por antecipação, valor cheio ou valor com encargos."""
     antecedencia = (vencimento - pagamento).days
     if antecedencia >= DIAS_PARA_DESCONTO:
-        return valor - valor * DESCONTO_ANTECIPACAO
+        desconto = (valor * DESCONTO_ANTECIPACAO).quantize(CENTAVO, rounding=ROUND_HALF_UP)
+        return valor - desconto
     return valor + calcular_encargos(valor, vencimento, pagamento)

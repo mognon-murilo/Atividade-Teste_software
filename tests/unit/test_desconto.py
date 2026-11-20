@@ -64,3 +64,10 @@ def test_antecedencia_conta_sobre_o_vencimento_original_nove_dias_antes_do_sabad
     valor = calcular_valor_pagamento(Decimal("1000.00"), VENCIMENTO_SABADO, date(2026, 11, 5))
 
     assert valor == Decimal("1000.00")
+
+
+def test_desconto_com_meio_centavo_e_arredondado_para_cima():
+    # 5% de 100,10 = 5,005, que arredonda para 5,01
+    valor = calcular_valor_pagamento(Decimal("100.10"), VENCIMENTO, date(2026, 10, 31))
+
+    assert valor == Decimal("95.09")
