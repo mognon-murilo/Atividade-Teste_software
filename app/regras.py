@@ -8,6 +8,8 @@ from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
 
 MULTA = Decimal("0.02")            # 2% sobre o valor pago em atraso
 JUROS_AO_DIA = Decimal("0.00033")  # 0,033% ao dia
+DESCONTO_ANTECIPACAO = Decimal("0.05")  # 5% sobre o valor pago
+DIAS_PARA_DESCONTO = 10           # antecedência mínima, em dias
 CENTAVO = Decimal("0.01")
 ZERO = Decimal("0.00")
 
@@ -82,4 +84,7 @@ def novo_status(valor_do_titulo: Decimal, saldo_restante: Decimal) -> str:
 
 def calcular_valor_pagamento(valor: Decimal, vencimento: date, pagamento: date) -> Decimal:
     """Regra 9: desconto por antecipação, valor cheio ou valor com encargos."""
+    antecedencia = (vencimento - pagamento).days
+    if antecedencia >= DIAS_PARA_DESCONTO:
+        return valor - valor * DESCONTO_ANTECIPACAO
     return valor
