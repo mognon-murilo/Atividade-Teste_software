@@ -37,3 +37,15 @@ Cada linha da tabela vira um teste em `tests/unit/test_desconto.py`, nesta ordem
 8. C6, vencimento no sábado e pagamento 10 dias antes do sábado (04/11) → 950,00
 9. C6, vencimento no sábado e pagamento 9 dias antes do sábado (05/11) → 1.000,00
 10. C7, desconto com meio centavo (100,10 em 31/10) → 95,09
+11. C4, valor representativo: vencimento no sábado e pagamento no domingo (15/11) → 1.000,00
+
+## Caixa-branca (cobertura de desvios)
+
+```
+docker compose run --rm testes pytest tests/unit --cov=app.regras --cov-branch --cov-report=term-missing
+```
+
+`calcular_valor_pagamento` e `calcular_encargos` ficaram com todos os desvios exercitados
+(`BrPart 0`, nenhuma das suas linhas na coluna `Missing`). O caso 11 foi acrescentado
+depois da medição: era o valor representativo da classe C4 e ainda não tinha teste.
+As linhas que aparecem em `Missing` são de outras regras (1, 2, 3 e 6).
